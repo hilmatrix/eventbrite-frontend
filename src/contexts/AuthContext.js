@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
@@ -21,8 +21,12 @@ export function AuthProvider({ children }) {
     setIsLoggedIn(false);
   };
 
+  const getJwtToken = () => {
+    return localStorage.getItem('token');
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, getJwtToken }}>
       {children}
     </AuthContext.Provider>
   );
