@@ -1,33 +1,60 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import React, { createContext, useState, useContext, ReactNode, useCallback } from "react";
 
-const EventContext = createContext();
+interface Event {
+  id: number;
+  name: string;
+  price: number;
+  description: string;
+  location: string;
+  category: string;
+  date: string;
+  imageUrl: string;
+}
 
-export function EventProvider({ children }) {
-  const [events, setEvents] = useState([]);
+interface EventContextType {
+  events: Event[];
+  fetchEvents: (search: string, filters: object, page: number) => void;
+}
 
-  const fetchEvents = (search = "", filters = {}, page = 1) => {
-    const query = new URLSearchParams({
-      search,
-      category: filters.category || "",
-      location: filters.location || "",
-      page,
-    });
+const EventContext = createContext<EventContextType | null>(null);
 
-    fetch(`http://localhost:8080/api/v1/events?${query}`)
-      .then((res) => res.json())
-      .then((data) => setEvents(data))
-      .catch((err) => console.error(err));
-  };
+interface EventProviderProps {
+  children: ReactNode;
+}
+
+export const EventProvider: React.FC<EventProviderProps> = ({ children }) => {
+  const [events, setEvents] = useState<Event[]>([]);
+
+  const fetchEvents = useCallback(async (search: string, filters: object, page: number) => {
+    try {
+      const response = await fetch(`/api/events?search=${search}&page=${page}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(filters),
+      });
+
+      const data = await response.json();
+      setEvents(data.events || []);
+    } catch (error) {
+      console.error("Failed to fetch events:", error);
+    }
+  }, []);
+
+  const value: EventContextType = { events, fetchEvents };
 
   return (
-    <EventContext.Provider value={{ events, fetchEvents }}>
+    <EventContext.Provider value={value}>
       {children}
     </EventContext.Provider>
   );
-}
+};
 
-export function useEventContext() {
-  return useContext(EventContext);
-}
+export const useEventContext = () => {
+  const context = useContext(EventContext);
+  if (!context) {
+    throw new Error("useEventContext must be used within an EventProvider");
+  }
+  return context;
+};
