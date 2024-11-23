@@ -1,12 +1,12 @@
 "use client";
 
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { useParams } from "next/navigation"; // Import useParams from next/navigation
 import { useEffect, useState } from "react";
 
 export default function EventDetailsPage() {
-  const router = useRouter();
-  const { id } = router.query; // Dynamic event ID
-  const [event, setEvent] = useState(null);
+  const { id } = useParams() as { id: string }; // Access the dynamic event ID using useParams
+  const [event, setEvent] = useState<any>(null);
 
   useEffect(() => {
     if (id) {
@@ -27,9 +27,12 @@ export default function EventDetailsPage() {
         <p><strong>Date:</strong> {event.date}</p>
         <p><strong>Location:</strong> {event.location}</p>
       </div>
-      <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded">
-        Buy Tickets
-      </button>
+      {/* Using Link component for navigation */}
+      <Link href={`/buy-tickets/${id}`}>
+        <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded">
+          Buy Tickets
+        </button>
+      </Link>
     </div>
   );
 }
