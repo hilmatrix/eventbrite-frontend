@@ -126,10 +126,10 @@ export default function ProfilePage() {
 
         { profile.eventOrganizer && 
           <div className="bg-white shadow-md rounded-lg p-6 my-10 h-[50%] w-[90%] md:w-[80%]">
-            <h1 className="text-2xl font-bold mb-4 text-center">Organizer Tools</h1>
+            <h1 className="text-2xl font-bold mb-4 text-center">Organizer Menu</h1>
             <div className="flex items-center justify-center">
-              <Link href="/dashboard">
-                <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Event Dashboard</button>
+              <Link href="/organizer">
+                <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Organizer Menu</button>
               </Link>
             </div>
           </div>  
