@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import useAuthRedirect from '../../hooks/useAuthRedirect';
 
 export default function createPromotion() {
   const { isLoggedIn, getJwtToken } = useAuth();
@@ -15,6 +16,8 @@ export default function createPromotion() {
     promoEndedDate: "",
     promoEndedTime: "",
   });
+
+  useAuthRedirect();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
+import useAuthRedirect from '../../hooks/useAuthRedirect';
 
 export default function createEvent() {
   const { isLoggedIn, getJwtToken } = useAuth();
@@ -20,6 +21,8 @@ export default function createEvent() {
     ticketTypes: 0,
     isPaidEvent: false,
   });
+
+  useAuthRedirect();
 
   useEffect(() => {
     const fetchTokenTest = async () => {
