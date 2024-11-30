@@ -1,8 +1,9 @@
-"use client"
+"use client";
+
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-// Helper to format dates
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(dateString).toLocaleDateString(undefined, options);
@@ -22,6 +23,29 @@ interface Event {
 
 const EventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
+  const [filters, setFilters] = useState({ name: "", location: "", category: "", startDate: "", endDate: "" });
+  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedFilters(filters);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [filters]);
+
+  useEffect(() => {
+    const fetchFilteredEvents = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/events/filter", { params: debouncedFilters });
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Error fetching filtered events:", error);
+      }
+    };
+
+    fetchFilteredEvents();
+  }, [debouncedFilters]);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -38,12 +62,27 @@ const EventsPage = () => {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <div className="filters">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={filters.name}
+          onChange={(e) => setFilters({ ...filters, name: e.target.value })}
+        />
+        <input
+          type="text"
+          placeholder="Search by location"
+          value={filters.location}
+          onChange={(e) => setFilters({ ...filters, location: e.target.value })}
+        />
+      </div>
       <h1 className="text-2xl font-bold mb-4">Upcoming Events</h1>
       <div className="w-full max-w-4xl">
         {events.map((event, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-lg mb-4 p-6 hover:shadow-lg transition-shadow"
+            className="bg-white shadow-md rounded-lg mb-4 p-6 hover:shadow-lg transition-shadow cursor-pointer"
+            onClick={() => router.push(`/events/${index}`)} // Navigate to the event detail page
           >
             <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
             <p className="text-gray-600 mb-1">
@@ -55,13 +94,6 @@ const EventsPage = () => {
             <p className="text-gray-600 mb-1">
               <strong>Price:</strong> {event.isPaidEvent ? `Rp ${event.price}` : 'Free'}
             </p>
-            <p className="text-gray-600 mb-1">
-              <strong>Available Seats:</strong> {event.availableSeats}
-            </p>
-            <p className="text-gray-600 mb-1">
-              <strong>Registration opened at:</strong> {formatDate(event.createdAt)}
-            </p>
-            <p className="text-gray-700 mt-2">{event.description}</p>
           </div>
         ))}
       </div>

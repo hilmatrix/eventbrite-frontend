@@ -15,6 +15,7 @@ export default function createEvent() {
     time: '',
     location: '',
     description: '',
+    category: '',
     availableSeats: 0,
     ticketTypes: 0,
     isPaidEvent: false,
@@ -81,6 +82,7 @@ export default function createEvent() {
           time: eventForm.time,
           location: eventForm.location,
           description: eventForm.description,
+          category: eventForm.category,
           availableSeats: eventForm.availableSeats,
           ticketTypes: eventForm.ticketTypes,
           isPaidEvent: eventForm.isPaidEvent,
@@ -97,6 +99,7 @@ export default function createEvent() {
           time: '',
           location: '',
           description: '',
+          category: '',
           availableSeats: 0,
           ticketTypes: 0,
           isPaidEvent: false,
@@ -181,6 +184,17 @@ export default function createEvent() {
             id="description"
             name="description"
             value={eventForm.description}
+            onChange={handleChange}
+            className="w-full p-2 border border-gray-300 rounded"
+            required
+          />
+        </div>
+        <div className="mt-2">
+          <label htmlFor="category" className="block">Category</label>
+          <textarea
+            id="category"
+            name="category"
+            value={eventForm.category}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required

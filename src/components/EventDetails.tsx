@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useParams } from "next/navigation"; // Import useParams from next/navigation
-import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface Event {
@@ -16,18 +15,19 @@ interface Event {
   isPaidEvent: boolean;
   createdAt: string;
 }
-export default function EventDetailsPage() {
-  const { id } = useParams() as { id: string }; // Access the dynamic event ID using useParams
-  // const [event, setEvent] = useState<any>(null);
+
+const EventDetailPage = () => {
+  const router = useRouter();
+  const { eventId } = router.query;
   const [event, setEvent] = useState<Event | null>(null);
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState<number | null>(null);
 
   useEffect(() => {
-    if (id) {
+    if (eventId) {
       const fetchEvent = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/v1/events/${id}`);
+          const response = await axios.get(`http://localhost:8080/api/v1/events/${eventId}`);
           setEvent(response.data);
         } catch (error) {
           console.error('Error fetching event details:', error);
@@ -36,7 +36,7 @@ export default function EventDetailsPage() {
 
       fetchEvent();
     }
-  }, [id]);
+  }, [eventId]);
 
   const handleSaveSpot = async () => {
     alert('Spot saved! Enter promo code for discount.');
@@ -85,19 +85,7 @@ export default function EventDetailsPage() {
         {discount !== null && <p className="mt-2 text-green-700">Discount Applied: {discount}%</p>}
       </div>
     </div>
-    // <div className="p-4">
-    //   <h1 className="text-4xl font-bold">{event.title}</h1>
-    //   <p className="text-lg text-gray-600">{event.description}</p>
-    //   <div className="mt-4">
-    //     <p><strong>Date:</strong> {event.date}</p>
-    //     <p><strong>Location:</strong> {event.location}</p>
-    //   </div>
-    //   {/* Using Link component for navigation */}
-    //   <Link href={`/buy-tickets/${id}`}>
-    //     <button className="mt-4 px-6 py-2 bg-blue-500 text-white rounded">
-    //       Buy Tickets
-    //     </button>
-    //   </Link>
-    // </div>
   );
-}
+};
+
+export default EventDetailPage;
