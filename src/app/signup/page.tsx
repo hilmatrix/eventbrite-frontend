@@ -142,6 +142,15 @@ export default function SignupPage() {
             {loading ? "Signing up..." : "Sign Up"}
           </button>
           
+          <Link href="/login">
+              <button
+                className="w-full my-2 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
+              >
+                
+                Have an account ?
+              </button>
+           </Link>
+
           <Link href="/">
               <button
                 className="w-full my-2 py-2 text-white bg-red-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
