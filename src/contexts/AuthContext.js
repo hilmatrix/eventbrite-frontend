@@ -16,6 +16,8 @@ export function AuthProvider({ children }) {
 
     try {
       user = JSON.parse(user)
+      if (!user)
+        logout()
     } catch (error) {
       logout()
     }

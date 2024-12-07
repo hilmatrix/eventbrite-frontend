@@ -1,15 +1,15 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
-export default function AccountTickets() {
+export default function AccountTransactions() {
     const { getJwtToken } = useAuth();
-    const [tickets, setTickets] = useState([]);
-    const [ticketsLoaded, setTicketsLoaded] = useState(false);
+    const [transactions, setTransactions] = useState([]);
+    const [transactionsLoaded, setTransactionsLoaded] = useState(false);
 
     useEffect(() => {
         const fetchTickets = async () => {
           try {
             const token = getJwtToken();
-            const response = await fetch("http://localhost:8080/api/v1/tickets", {
+            const response = await fetch("http://localhost:8080/api/v1/transactions", {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -17,8 +17,8 @@ export default function AccountTickets() {
     
             if (response.ok) {
               const data = await response.json();
-              setTickets(data);
-              setTicketsLoaded(true);
+              setTransactions(data);
+              setTransactionsLoaded(true);
             } else {
               console.log("Failed fetch tickets");
             }
@@ -29,7 +29,7 @@ export default function AccountTickets() {
         fetchTickets();
       }, []);
 
-      function Ticket({detail}) {
+      function Transaction({detail}) {
         const [event, setEvent] = useState(null);
 
         useEffect(() => {
@@ -60,8 +60,8 @@ export default function AccountTickets() {
             <>
                   {!event && <p><strong>eventId:</strong> {detail.eventId}</p>}
                   {event && <p><strong>Event Name:</strong> {event.name}</p>}
-                  <p><strong>Ticket Code:</strong> {detail.code}</p>
-                  <p><strong>Used:</strong> {detail.used ? "Yes" : "No"}</p>
+                  <p><strong>Ticket Amount:</strong> {detail.ticketAmount}</p>
+                  <p><strong>Total Price:</strong> Rp. {detail.totalPrice}</p>
                   <p><strong>Created At:</strong> {new Date(detail.createdAt).toLocaleString()}</p>
             </>
         )
@@ -69,13 +69,13 @@ export default function AccountTickets() {
 
       return(
         <div className="bg-white shadow-md rounded-lg p-6 my-2 h-[50%] w-[90%] md:w-[80%]">
-        <h1 className="text-2xl font-bold mb-4 text-center">Tickets</h1>
+        <h1 className="text-2xl font-bold mb-4 text-center">Details</h1>
         <div className="my-4">
-          {ticketsLoaded ? (
+          {transactionsLoaded ? (
             <ul className="space-y-4">
-              {tickets.map((detail, index) => (
+              {transactions.map((detail, index) => (
                 <li key={index} className="p-4 border rounded-md shadow-sm bg-gray-100">
-                  <Ticket detail={detail}></Ticket>
+                  <Transaction detail={detail}></Transaction>
                 </li>
               ))}
             </ul>
