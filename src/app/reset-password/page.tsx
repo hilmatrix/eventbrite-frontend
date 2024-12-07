@@ -5,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function LoginPage() {
-  const {isLoggedIn, getJwtToken , login } = useAuth();
+export default function ResetPasswordPage() {
+  const {isLoggedIn} = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,31 +22,37 @@ export default function LoginPage() {
     }
  }, [isLoggedIn])
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleResetPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8080/api/v1/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-      if (!res.ok) throw new Error("Failed to login");
-      const data = await res.json();
-      login(data.token, email, data.user); // Update auth context with token and email
-      router.push("/"); // Redirect to homepage on success
+        const res = await fetch("http://localhost:8080/api/v1/login/reset-password", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+        });
+    
+        if (!res.ok) {
+            // Await the JSON response for the error details and access the 'result' field
+            const errorDetails = await res.json();
+            throw new Error(errorDetails.result || "Unknown error occurred");
+        }
+    
+        alert("Password Updated");
     } catch (error) {
-      alert("Login failed: " + error.message);
+        // Log the error and show a meaningful message
+        console.error("Error:", error);
+        alert("Password reset failed: " + error.message);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white shadow-md rounded-lg p-6">
-        <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <h1 className="text-2xl font-bold text-center mb-4">Reset Password</h1>
+        <form onSubmit={handleResetPassword} className="space-y-4">
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -78,14 +84,14 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
           >
-            {loading ? "Logging in..." : "Login"}
+            Reset Password
           </button>
 
-          <Link href="/reset-password">
+          <Link href="/login">
               <button
-                className="w-full my-2 py-2 text-white bg-[#999999] rounded-lg hover:bg-[#AAAAAA] focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
+                className="w-full my-2 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600 focus:ring-4 focus:ring-blue-300 disabled:opacity-50"
               >
-                Forgot your password ?
+                Back to Login
               </button>
            </Link>
 

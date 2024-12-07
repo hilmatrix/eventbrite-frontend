@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 import { memo, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -16,7 +16,9 @@ const LoggedIn = memo(({ loggedEmail, logout, toggleDropdown, dropdownOpen }) =>
       <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded shadow-lg z-10">
         <ul>
           <li>
-            <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">Profile</Link>
+            <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+              Profile
+            </Link>
           </li>
           <li>
             <button
@@ -33,29 +35,31 @@ const LoggedIn = memo(({ loggedEmail, logout, toggleDropdown, dropdownOpen }) =>
 ));
 
 const NotLoggedIn = memo(({ email, setEmail, password, setPassword, handleLogin }) => (
-  <div className="flex items-center gap-4">
+  <div className="flex flex-col sm:flex-row items-center gap-4">
     <input
       type="email"
       placeholder="Email"
       value={email}
       onChange={(e) => setEmail(e.target.value)}
-      className="px-4 py-2 rounded text-black"
+      className="w-full sm:w-auto px-4 py-2 rounded text-black"
     />
     <input
       type="password"
       placeholder="Password"
       value={password}
       onChange={(e) => setPassword(e.target.value)}
-      className="px-4 py-2 rounded text-black"
+      className="w-full sm:w-auto px-4 py-2 rounded text-black"
     />
     <button
       onClick={handleLogin}
-      className="px-4 py-2 bg-blue-500 text-white rounded"
+      className="w-full sm:w-auto px-4 py-2 bg-blue-500 text-white rounded"
     >
       Login
     </button>
     <Link href="/signup">
-      <button className="px-4 py-2 bg-green-700 text-white rounded">Signup</button>
+      <button className="w-full sm:w-auto px-4 py-2 bg-green-700 text-white rounded">
+        Signup
+      </button>
     </Link>
   </div>
 ));
@@ -84,20 +88,30 @@ export default function Header() {
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
   const pathname = usePathname();
-  const noHeaderRoutes = ['/login', '/signup'];
+  const noHeaderRoutes = ["/login", "/signup", "/reset-password"];
 
   return (
     <>
       {!noHeaderRoutes.includes(pathname) && (
-        <header className="bg-black text-white py-4 px-6 flex justify-between items-center">
-          <div>
-            <Link href="/" className="mx-2 underline">Home</Link>
-            <Link href="/events" className="mx-2 underline">Events</Link>
-            <Link href="/sample-events" className="mx-2 underline">Sample Events</Link>
-            <Link href="/organizer" className="mx-2 underline">Organizer Menu</Link>
-            <Link href="/profile" className="mx-2 underline">Profile</Link>
+        <header className="bg-black text-white py-4 px-6 flex flex-wrap justify-between items-center">
+          <div className="w-full sm:w-auto flex flex-wrap gap-4">
+            <Link href="/" className="mx-2 underline">
+              Home
+            </Link>
+            <Link href="/events" className="mx-2 underline">
+              Events
+            </Link>
+            <Link href="/sample-events" className="mx-2 underline">
+              Sample Events
+            </Link>
+            <Link href="/organizer" className="mx-2 underline">
+              Organizer Menu
+            </Link>
+            <Link href="/account" className="mx-2 underline">
+              Profile
+            </Link>
           </div>
-          <div>
+          <div className="w-full sm:w-auto">
             {!isAuthLoaded ? (
               <>Loading</>
             ) : isLoggedIn ? (
