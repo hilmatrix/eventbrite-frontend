@@ -11,7 +11,7 @@ export default function SignupPage() {
     email: "",
     password: "",
     role: "customer", // Default role is customer
-    referral: "",
+    referral: ""
   });
   const [loading, setLoading] = useState(false);
 
@@ -38,7 +38,7 @@ export default function SignupPage() {
         router.push("/login"); // Redirect to login on success
       } else {
         const errorData = await res.json();
-        alert("Signup failed: " + JSON.stringify(errorData));
+        alert("Signup failed: " + errorData.message);
       }
     } catch (error) {
       alert("An unexpected error occurred: " + error.message);
