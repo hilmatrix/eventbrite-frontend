@@ -33,7 +33,7 @@ export default function LoginPage() {
       });
       if (!res.ok) throw new Error("Failed to login");
       const data = await res.json();
-      login(data.token, email); // Update auth context with token and email
+      login(data.token, email, data.user); // Update auth context with token and email
       router.push("/"); // Redirect to homepage on success
     } catch (error) {
       alert("Login failed: " + error.message);

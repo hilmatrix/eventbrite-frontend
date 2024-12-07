@@ -107,7 +107,7 @@ export default function Header() {
             <Link href="/organizer" className="mx-2 underline">
               Organizer Menu
             </Link>
-            <Link href="/profile" className="mx-2 underline">
+            <Link href="/account" className="mx-2 underline">
               Profile
             </Link>
           </div>
