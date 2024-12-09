@@ -1,5 +1,6 @@
 "use client";
 
+import { API_PROMOTIONS } from "@/constants/api";
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import useAuthRedirect from '../../hooks/useAuthRedirect';
@@ -36,7 +37,7 @@ export default function createPromotion() {
 
     try {
       const token = getJwtToken();
-      const response = await fetch("http://localhost:8080/api/v1/promotions", {
+      const response = await fetch(API_PROMOTIONS, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

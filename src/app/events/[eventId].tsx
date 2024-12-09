@@ -1,8 +1,9 @@
 "use client";
 
+import { API_EVENTS, API_PROMOTIONS } from '@/constants/api';
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 interface Event {
   name: string;
@@ -27,7 +28,7 @@ const EventDetailPage = () => {
     if (eventId) {
       const fetchEvent = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/v1/events/${eventId}`);
+          const response = await axios.get(API_EVENTS + "/" + eventId);
           setEvent(response.data);
         } catch (error) {
           console.error('Error fetching event details:', error);
@@ -44,7 +45,7 @@ const EventDetailPage = () => {
 
   const validatePromoCode = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/promotions/validate', { promoCode });
+      const response = await axios.post(API_PROMOTIONS + "promotions"/validate", { promoCode });
       setDiscount(response.data.discount);
       alert('Promo code applied!');
     } catch (error) {

@@ -1,5 +1,6 @@
 "use client";
 
+import { API_SIGNUP } from "@/constants/api";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,7 +29,7 @@ export default function SignupPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:8080/api/v1/signup", {
+      const res = await fetch(API_SIGNUP, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

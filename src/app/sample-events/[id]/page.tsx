@@ -1,4 +1,5 @@
 "use client"
+import { API_EVENTS } from '@/constants/api';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -29,7 +30,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/v1/events/${id}`);
+        const response = await axios.get(API_EVENTS + "/" + id);
         setEvent(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);

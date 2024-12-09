@@ -65,7 +65,7 @@ const NotLoggedIn = memo(({ email, setEmail, password, setPassword, handleLogin 
 ));
 
 export default function Header() {
-  const { isLoggedIn, login, logout, loggedEmail, isAuthLoaded } = useAuth();
+  const { isLoggedIn, login, logout, loggedEmail, isAuthLoaded, loggedUser } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -79,7 +79,7 @@ export default function Header() {
       });
       if (!res.ok) throw new Error("Failed to login");
       const data = await res.json();
-      login(data.token, email);
+      login(data.token, email, data.user);
     } catch (error) {
       alert("Login failed " + error);
     }
@@ -104,9 +104,9 @@ export default function Header() {
             <Link href="/sample-events" className="mx-2 underline">
               Sample Events
             </Link>
-            <Link href="/organizer" className="mx-2 underline">
+            {loggedUser && loggedUser.eventOrganizer && <Link href="/account?tab=events" className="mx-2 underline">
               Organizer Menu
-            </Link>
+            </Link>}
             <Link href="/account" className="mx-2 underline">
               Profile
             </Link>

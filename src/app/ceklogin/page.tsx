@@ -1,4 +1,5 @@
 "use client";
+import { API_TEST_TOKEN, API_USER } from '@/constants/api';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -14,7 +15,7 @@ export default function CekLogin() {
           const token = getJwtToken();
           
           // Fetch from /testtoken
-          const testTokenResponse = await fetch('http://localhost:8080/testtoken', {
+          const testTokenResponse = await fetch(API_TEST_TOKEN, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -29,7 +30,7 @@ export default function CekLogin() {
           }
 
           // Fetch user data from /api/v1/user
-          const userResponse = await fetch('http://localhost:8080/api/v1/user', {
+          const userResponse = await fetch(API_USER, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,

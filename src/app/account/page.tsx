@@ -1,11 +1,12 @@
 "use client";
 
+import AccountEvents from "@/components/AccountEvents";
 import AccountPoints from "@/components/AccountPoints";
 import AccountProfile from "@/components/AccountProfile";
+import AccountPromotions from "@/components/AccountPromotions";
 import AccountTickets from "@/components/AccountTickets";
 import AccountTransactions from "@/components/AccountTransactions";
 import ReusableLink from "@/components/ReusableLink";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "../../contexts/AuthContext"; // Adjust this import to the correct location
 import useAuthRedirect from '../../hooks/useAuthRedirect';
@@ -28,6 +29,9 @@ export default function AccountPage() {
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=points"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Points</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=tickets"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Tickets</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=transactions"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Transactions</ReusableLink>}
+              {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=events"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Events</ReusableLink>}
+              {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=promotions"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Promotions</ReusableLink>}
+              {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=statistics"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Statistics</ReusableLink>}
           </div>
 
           {!tab && <AccountProfile></AccountProfile>}
@@ -38,16 +42,9 @@ export default function AccountPage() {
 
         { (!loggedUser.eventOrganizer && (tab == "transactions")) && <AccountTransactions></AccountTransactions>}
 
-        { loggedUser.eventOrganizer && 
-          <div className="bg-white shadow-md rounded-lg p-6 my-10 h-[50%] w-[90%] md:w-[80%]">
-            <h1 className="text-2xl font-bold mb-4 text-center">Organizer Menu</h1>
-            <div className="flex items-center justify-center">
-              <Link href="/organizer">
-                <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Organizer Menu</button>
-              </Link>
-            </div>
-          </div>  
-        }
+        { (loggedUser.eventOrganizer && (tab == "events")) && <AccountEvents></AccountEvents>}        
+        { (loggedUser.eventOrganizer && (tab == "promotions")) && <AccountPromotions></AccountPromotions>}  
+        { (loggedUser.eventOrganizer && (tab == "statistics")) && <AccountTransactions></AccountTransactions>}         
         </div>
       }
     </div>

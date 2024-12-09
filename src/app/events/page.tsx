@@ -1,7 +1,8 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import { API_EVENTS } from '@/constants/api';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const formatDate = (dateString: string) => {
@@ -37,7 +38,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchFilteredEvents = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/events/filter", { params: debouncedFilters });
+        const response = await axios.get(API_EVENTS + "/filter", { params: debouncedFilters });
         setEvents(response.data);
       } catch (error) {
         console.error("Error fetching filtered events:", error);
@@ -50,7 +51,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/v1/events');
+        const response = await axios.get(API_EVENTS);
         setEvents(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
