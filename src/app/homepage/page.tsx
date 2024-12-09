@@ -37,21 +37,9 @@ const events: Event[] = [
 const App: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-md">
-        <nav className="container mx-auto p-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">Eventbrite</h1>
-          <ul className="flex space-x-6 text-gray-700">
-            <li>Home</li>
-            <li>Events</li>
-            <li>Contact</li>
-            <li>Sign Up</li>
-          </ul>
-        </nav>
-      </header>
 
       {/* Hero Section */}
-      <section className="bg-blue-600 text-white py-20">
+      <section className="bg-gray-400 text-white py-20">
         <div className="container mx-auto text-center">
           <h2 className="text-4xl font-bold mb-4">Discover Amazing Events Near You</h2>
           <p className="text-lg mb-6">Explore and find the perfect event to attend</p>

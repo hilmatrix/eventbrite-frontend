@@ -157,7 +157,7 @@ export default function SamplePurchasePage() {
     console.log(payload)
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/transactions', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_HOST + '/api/v1/transactions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

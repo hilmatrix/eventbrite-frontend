@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { API_EVENTS, API_PROMOTIONS } from "@/constants/api";
+import axios from 'axios';
 import { useParams } from "next/navigation"; // Import useParams from next/navigation
 import { useEffect, useState } from "react";
-import axios from 'axios';
 
 interface Event {
   name: string;
@@ -27,7 +27,7 @@ export default function EventDetailsPage() {
     if (id) {
       const fetchEvent = async () => {
         try {
-          const response = await axios.get(`http://localhost:8080/api/v1/events/${id}`);
+          const response = await axios.get(API_EVENTS + "/" + id);
           setEvent(response.data);
         } catch (error) {
           console.error('Error fetching event details:', error);
@@ -44,7 +44,7 @@ export default function EventDetailsPage() {
 
   const validatePromoCode = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/v1/promotions/validate', { promoCode });
+      const response = await axios.post(API_PROMOTIONS + "/validate", { promoCode });
       setDiscount(response.data.discount);
       alert('Promo code applied!');
     } catch (error) {

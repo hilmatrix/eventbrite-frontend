@@ -1,4 +1,5 @@
 "use client";
+import { API_TEST_TOKEN } from "@/constants/api";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
@@ -24,7 +25,7 @@ export function AuthProvider({ children }) {
 
     if (token) {
       // Check if the token is still valid by sending a request to the server
-      fetch("http://localhost:8080/testtoken", {
+      fetch(API_TEST_TOKEN, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

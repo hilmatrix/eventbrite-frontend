@@ -1,5 +1,6 @@
 "use client";
 
+import { API_EVENTS } from '@/constants/api';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import useAuthRedirect from '../../hooks/useAuthRedirect';
@@ -31,7 +32,7 @@ export default function createEvent() {
           const token = getJwtToken();
 
           // Fetch from /testtoken to verify token
-          const testTokenResponse = await fetch('http://localhost:8080/api/v1/events', {
+          const testTokenResponse = await fetch(API_EVENTS, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -70,7 +71,7 @@ export default function createEvent() {
 
     try {
       const token = getJwtToken();
-      const response = await fetch('http://localhost:8080/api/v1/events', {
+      const response = await fetch(API_EVENTS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

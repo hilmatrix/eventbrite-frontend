@@ -1,3 +1,4 @@
+import { API_REFERRAL_POINTS } from "@/constants/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 
@@ -12,7 +13,7 @@ export default function AccountPoints() {
     const fetchReferralPoints = async () => {
       try {
         const token = getJwtToken();
-        const response = await fetch("http://localhost:8080/api/v1/referral-points", {
+        const response = await fetch(API_REFERRAL_POINTS, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +32,7 @@ export default function AccountPoints() {
 
       try {
         const token = getJwtToken();
-        const response = await fetch("http://localhost:8080/api/v1/referral-points/details", {
+        const response = await fetch(API_REFERRAL_POINTS + "/details", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

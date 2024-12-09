@@ -1,3 +1,4 @@
+import { API_EVENTS, API_TRANSACTIONS } from "@/constants/api";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 export default function AccountTransactions() {
@@ -9,7 +10,7 @@ export default function AccountTransactions() {
         const fetchTickets = async () => {
           try {
             const token = getJwtToken();
-            const response = await fetch("http://localhost:8080/api/v1/transactions", {
+            const response = await fetch(API_TRANSACTIONS, {
               headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -36,7 +37,7 @@ export default function AccountTransactions() {
           const fetchEvent = async () => {
               try {
                 const token = getJwtToken();
-                const response = await fetch(`http://localhost:8080/api/v1/events/${detail.eventId}`, {
+                const response = await fetch(API_EVENTS + "/" + detail.eventId, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                   },
