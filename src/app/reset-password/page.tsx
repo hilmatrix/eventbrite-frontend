@@ -1,5 +1,6 @@
 "use client";
 
+import { API_RESET_PASSWORD } from "@/constants/api";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -26,7 +27,7 @@ export default function ResetPasswordPage() {
     e.preventDefault();
     setLoading(true);
     try {
-        const res = await fetch("http://localhost:8080/api/v1/login/reset-password", {
+        const res = await fetch(API_RESET_PASSWORD, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password }),

@@ -50,7 +50,7 @@ const EventsPage = () => {
 
   return (
     <div className="flex flex-col items-center p-4">
-      <h1 className="text-2xl font-bold mb-4">Upcoming Events</h1>
+      <h1 className="text-2xl font-bold mb-4">Created Events</h1>
       <Link href="/create-event" className="m-4">
           <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Create Event</button>
       </Link>
@@ -77,6 +77,11 @@ const EventsPage = () => {
                 <strong>Registration opened at:</strong> {formatDate(event.createdAt)}
               </p>
               <p className="text-gray-700 mt-2">{event.description}</p>
+              {event.isPaidEvent &&
+                <Link href={`/create-promotion/${event.eventId}`} className="m-2 flex justify-center">
+                <button className="rounded-[10px] bg-[#00AA00] h-10 p-2 flex items-center justify-center ">Create Promotion</button>
+                </Link>
+              }
             </div>
           </div>
         ))}

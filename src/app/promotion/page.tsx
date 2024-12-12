@@ -1,4 +1,5 @@
 "use client";
+import { API_PROMOTIONS } from "@/constants/api";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -36,7 +37,7 @@ const PromotionsPage = () => {
   useEffect(() => {
     const fetchPromotions = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/v1/promotions");
+        const response = await axios.get(API_PROMOTIONS);
         setPromotions(response.data);
       } catch (error) {
         console.error("Error fetching promotions:", error);

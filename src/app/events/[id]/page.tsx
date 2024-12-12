@@ -1,7 +1,9 @@
 "use client";
 
-import { API_EVENTS, API_PROMOTIONS } from "@/constants/api";
+import { API_EVENTS_BY_ID, API_PROMOTIONS } from "@/constants/api";
+import { useAuth } from '@/contexts/AuthContext';
 import axios from 'axios';
+import Link from 'next/link';
 import { useParams } from "next/navigation"; // Import useParams from next/navigation
 import { useEffect, useState } from "react";
 
@@ -22,12 +24,13 @@ export default function EventDetailsPage() {
   const [event, setEvent] = useState<Event | null>(null);
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState<number | null>(null);
+  const {getJwtToken} = useAuth();
 
   useEffect(() => {
     if (id) {
       const fetchEvent = async () => {
         try {
-          const response = await axios.get(API_EVENTS + "/" + id);
+          const response = await axios.get(API_EVENTS_BY_ID + "/" + id);
           setEvent(response.data);
         } catch (error) {
           console.error('Error fetching event details:', error);
@@ -57,6 +60,9 @@ export default function EventDetailsPage() {
 
   return (
     <div className="flex flex-col items-center p-4">
+      <Link href="/events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
+        Back to Events
+      </Link>
       <h1 className="text-2xl font-bold mb-4">{event.name}</h1>
       <p><strong>Date:</strong> {event.date} at {event.time}</p>
       <p><strong>Location:</strong> {event.location}</p>

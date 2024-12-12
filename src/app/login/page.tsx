@@ -16,7 +16,6 @@ export default function LoginPage() {
   
 
   useEffect(() => {
-    // Redirect to /login if not logged in
     if (isLoggedIn) {
       router.push(routeTarget || '/')
       return;

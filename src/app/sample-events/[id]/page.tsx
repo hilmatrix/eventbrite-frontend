@@ -1,5 +1,5 @@
 "use client"
-import { API_EVENTS } from '@/constants/api';
+import { API_EVENTS_BY_ID } from '@/constants/api';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -30,7 +30,7 @@ const EventsPage = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await axios.get(API_EVENTS + "/" + id);
+        const response = await axios.get(API_EVENTS_BY_ID + "/" + id);
         setEvent(response.data);
       } catch (error) {
         console.error('Error fetching events:', error);
@@ -45,7 +45,7 @@ const EventsPage = () => {
     <div className="flex flex-col items-center p-4">
       <h1 className="text-2xl font-bold mb-4">Event Details</h1>
       <Link href="/sample-events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
-        Back to Sample Events
+        Back to Dev-Events
       </Link>
       <div className="w-full max-w-4xl">
           <div
