@@ -36,13 +36,14 @@ export default function PromotionsList() {
     <>
       <div className="bg-white shadow-md rounded-lg p-6 my-2 h-[50%] w-[90%] md:w-[80%]">
         <h1 className="text-2xl font-bold mb-4 text-center">Promotions</h1>
+        
         <div className="my-4">
           {promotionsLoaded ? (
             <ul className="space-y-4">
               {promotions.map((promotion, index) => (
                 <li key={promotion.promoId} className="p-4 border rounded-md shadow-sm bg-gray-100">
                   <p><strong>Promo Code:</strong> {promotion.promoCode}</p>
-                  <p><strong>Price Cut:</strong> {promotion.isPercentage ? `${promotion.priceCut}%` : `$${promotion.priceCut.toFixed(2)}`}</p>
+                  <p><strong>Price Cut:</strong> {promotion.isPercentage ? `${promotion.priceCut}%` : `Rp. ${promotion.priceCut.toFixed(2)}`}</p>
                   <p><strong>Promo Start:</strong> {promotion.promoStartedDate} {promotion.promoStartedTime}</p>
                   <p><strong>Promo End:</strong> {promotion.promoEndedDate} {promotion.promoEndedTime}</p>
                   <p><strong>Created At:</strong> {new Date(promotion.createdAt).toLocaleString()}</p>

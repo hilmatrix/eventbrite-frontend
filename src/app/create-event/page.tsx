@@ -1,6 +1,7 @@
 "use client";
 
 import { API_EVENTS } from '@/constants/api';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -94,6 +95,9 @@ export default function createEvent() {
 
   return (
     <div className="p-4">
+      <Link href="/account?tab=events" className="m-4 flex justify-center">
+          <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Back to Organizer Events</button>
+      </Link>
       <h1 className="text-3xl font-bold">Create New Event</h1>
       <form onSubmit={handleSubmit} className="mt-4">
         <div>

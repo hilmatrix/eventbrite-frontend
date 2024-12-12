@@ -1,30 +1,60 @@
 "use client";
 
-import { API_PROMOTIONS } from "@/constants/api";
-import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
-import useAuthRedirect from '../../hooks/useAuthRedirect';
+import { API_EVENTS_BY_ID, API_PROMOTIONS } from "@/constants/api";
+import Link from 'next/link';
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
+import useAuthRedirect from '../../../hooks/useAuthRedirect';
 
 export default function createPromotion() {
   const { isLoggedIn, getJwtToken } = useAuth();
   const [responseText, setResponseText] = useState("");
   const [promotionForm, setPromotionForm] = useState({
-    eventId: "", // Organizer should select an event
-    referralCode: "",
+    promoCode: "",
     priceCut: 0,
     promoStartedDate: "",
     promoStartedTime: "",
     promoEndedDate: "",
     promoEndedTime: "",
+    isPercentage: false
   });
+  const eventId = useParams().id;
+  const [event, setEvent] = useState<Event[]>([]);
+  const router = useRouter();
 
   useAuthRedirect();
 
+  useEffect(() => {
+    const fetchEvent = async () => {
+        try {
+          const token = getJwtToken();
+          const response = await fetch(API_EVENTS_BY_ID + "/" + eventId, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          console.log(response)
+  
+          if (response.ok) {
+            const data = await response.json();
+            setEvent(data);
+          } else {
+            console.log("Failed fetch events");
+          }
+        } catch (error) {
+          console.log("Error fetching events:", error);
+        }
+      }
+      fetchEvent();
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, type, value, checked } = e.target;
     setPromotionForm((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: type === 'checkbox' ? checked : value, // Toggle for checkboxes, use value for others
     }));
   };
 
@@ -44,60 +74,62 @@ export default function createPromotion() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          event: { eventId: parseInt(promotionForm.eventId, 10) }, // Ensure eventId is a number
-          referralCode: promotionForm.referralCode,
+          eventId: eventId, // Ensure eventId is a number
+          promoCode: promotionForm.promoCode,
           priceCut: parseFloat(promotionForm.priceCut.toString()), // Ensure priceCut is a float
           promoStartedDate: promotionForm.promoStartedDate,
           promoStartedTime: promotionForm.promoStartedTime,
           promoEndedDate: promotionForm.promoEndedDate,
           promoEndedTime: promotionForm.promoEndedTime,
+          isPercentage: promotionForm.isPercentage
         }),
       });
 
       if (response.ok) {
-        setResponseText("Promotion created successfully!");
+        alert("Promotion created successfully!");
+        router.push("/account?tab=promotions")
         setPromotionForm({
           eventId: "",
-          referralCode: "",
+          promoCode: "",
           priceCut: 0,
           promoStartedDate: "",
           promoStartedTime: "",
           promoEndedDate: "",
           promoEndedTime: "",
+          isPercentage : false
         });
       } else {
         const errorText = await response.text();
-        setResponseText(`Failed to create promotion: ${errorText}`);
+        alert(`Failed to create promotion: ${errorText}`);
       }
     } catch (error) {
       console.error("Error creating promotion:", error);
-      setResponseText("Error creating promotion");
+      alert("Error creating promotion");
     }
   };
 
   return (
     <div className="p-4">
+      <Link href="/account?tab=events" className="m-4 flex justify-center">
+          <button className="rounded-[10px] bg-[#AAAAAA] h-10 p-4 flex items-center justify-center ">Back to Organizer Events</button>
+      </Link>
       <h1 className="text-3xl font-bold">Create New Promotion</h1>
       <form onSubmit={handleSubmit} className="mt-4">
         <div>
-          <label htmlFor="eventId" className="block">Event ID</label>
-          <input
-            type="number"
-            id="eventId"
-            name="eventId"
-            value={promotionForm.eventId}
-            onChange={handleChange}
-            className="w-full p-2 border border-gray-300 rounded"
-            required
-          />
+          <label htmlFor="eventId" className="block">Event Name</label>
+          <label
+            className="w-full p-2 border border-gray-300 rounded bg-gray-300"
+          >
+          {event ? event.name : promotionForm.eventId}
+          </label>
         </div>
         <div className="mt-2">
-          <label htmlFor="referralCode" className="block">Referral Code</label>
+          <label htmlFor="promoCode" className="block">Promo Code</label>
           <input
             type="text"
-            id="referralCode"
-            name="referralCode"
-            value={promotionForm.referralCode}
+            id="promoCode"
+            name="promoCode"
+            value={promotionForm.promoCode}
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required
@@ -115,6 +147,19 @@ export default function createPromotion() {
             step="0.01"
             required
           />
+        </div>
+        <div className="mt-2">
+        <label htmlFor="isPercentage" className="flex items-center gap-2">
+          Promo Is Percentage
+          <input
+            type="checkbox"
+            id="isPercentage"
+            name="isPercentage"
+            checked={promotionForm.isPercentage}
+            onChange={handleChange}
+            className="p-2 border border-gray-300 rounded"
+          />
+        </label>
         </div>
         <div className="mt-2">
           <label htmlFor="promoStartedDate" className="block">Promo Start Date</label>

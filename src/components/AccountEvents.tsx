@@ -77,6 +77,11 @@ const EventsPage = () => {
                 <strong>Registration opened at:</strong> {formatDate(event.createdAt)}
               </p>
               <p className="text-gray-700 mt-2">{event.description}</p>
+              {event.isPaidEvent &&
+                <Link href={`/create-promotion/${event.eventId}`} className="m-2 flex justify-center">
+                <button className="rounded-[10px] bg-[#00AA00] h-10 p-2 flex items-center justify-center ">Create Promotion</button>
+                </Link>
+              }
             </div>
           </div>
         ))}
