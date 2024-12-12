@@ -1,7 +1,8 @@
 "use client";
 
 import { API_EVENTS } from '@/constants/api';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import useAuthRedirect from '../../hooks/useAuthRedirect';
 
@@ -22,37 +23,9 @@ export default function createEvent() {
     ticketTypes: 0,
     isPaidEvent: false,
   });
+  const router = useRouter();
 
   useAuthRedirect();
-
-  useEffect(() => {
-    const fetchTokenTest = async () => {
-      if (isLoggedIn) {
-        try {
-          const token = getJwtToken();
-
-          // Fetch from /testtoken to verify token
-          const testTokenResponse = await fetch(API_EVENTS, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`,
-            },
-          });
-
-          if (testTokenResponse.ok) {
-            const text = await testTokenResponse.text();
-            setResponseText(text);
-          } else {
-            setResponseText('Failed to fetch /testtoken response');
-          }
-        } catch (error) {
-          console.error('Error fetching token test:', error);
-          setResponseText('Error fetching /testtoken');
-        }
-      }
-    };
-    fetchTokenTest();
-  }, [isLoggedIn, getJwtToken]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -81,7 +54,7 @@ export default function createEvent() {
           user: { userId: eventForm.userId },
           isActive: true,
           name: eventForm.name,
-          price: parseFloat(eventForm.price.toString()), // Ensure it's a number
+          price: isPaidEvent ? parseFloat(eventForm.price.toString()) : 0, // Ensure it's a number
           date: eventForm.date,
           time: eventForm.time,
           location: eventForm.location,
@@ -94,7 +67,8 @@ export default function createEvent() {
       });
 
       if (response.ok) {
-        setResponseText('Event created successfully!');
+        alert('Event created successfully!');
+        router.push(`/account?tab=events`);
         setEventForm({
           userId: 1,
           name: '',
@@ -110,11 +84,11 @@ export default function createEvent() {
         });
       } else {
         const errorText = await response.text();
-        setResponseText(`Failed to create event: ${errorText}`);
+        alert(`Failed to create event: ${errorText}`);
       }
     } catch (error) {
       console.error('Error creating event:', error);
-      setResponseText('Error creating event');
+      alert('Error creating event');
     }
   };
 
@@ -135,6 +109,18 @@ export default function createEvent() {
           />
         </div>
         <div className="mt-2">
+          <label htmlFor="isPaidEvent" className="block">Paid Event</label>
+          <input
+            type="checkbox"
+            id="isPaidEvent"
+            name="isPaidEvent"
+            checked={eventForm.isPaidEvent}
+            onChange={(e) => setEventForm((prev) => ({ ...prev, isPaidEvent: e.target.checked }))}
+            className="p-2"
+          />
+        </div>
+        {eventForm && eventForm.isPaidEvent &&
+        <div className="mt-2">
           <label htmlFor="price" className="block">Price</label>
           <input
             type="number"
@@ -145,7 +131,7 @@ export default function createEvent() {
             className="w-full p-2 border border-gray-300 rounded"
             required
           />
-        </div>
+        </div> }
         <div className="mt-2">
           <label htmlFor="date" className="block">Date</label>
           <input
@@ -226,17 +212,6 @@ export default function createEvent() {
             onChange={handleChange}
             className="w-full p-2 border border-gray-300 rounded"
             required
-          />
-        </div>
-        <div className="mt-2">
-          <label htmlFor="isPaidEvent" className="block">Paid Event</label>
-          <input
-            type="checkbox"
-            id="isPaidEvent"
-            name="isPaidEvent"
-            checked={eventForm.isPaidEvent}
-            onChange={(e) => setEventForm((prev) => ({ ...prev, isPaidEvent: e.target.checked }))}
-            className="p-2"
           />
         </div>
         <div className="mt-4">

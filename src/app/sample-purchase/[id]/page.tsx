@@ -1,5 +1,7 @@
 'use client';
 
+import { API_AVAILABLE_SEATS, API_EVENTS_BY_ID, API_REFERRAL_POINTS, API_TRANSACTIONS } from '@/constants/api';
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from "../../../contexts/AuthContext";
@@ -25,7 +27,7 @@ export default function SamplePurchasePage() {
   useEffect(() => {
     const fetchData = async () => {
         try {
-          const response = await fetch(`http://localhost:8080/api/v1/events/${id}`)
+          const response = await fetch(API_EVENTS_BY_ID + "/" + id)
   
           if (response.ok) {
             const data = await response.json();
@@ -38,7 +40,7 @@ export default function SamplePurchasePage() {
         }
 
         try {
-          const response = await fetch(`http://localhost:8080/api/v1/available-seats/${id}`)
+          const response = await fetch(`${API_AVAILABLE_SEATS}/${id}`)
   
           if (response.ok) {
             const data = await response.json();
@@ -51,7 +53,7 @@ export default function SamplePurchasePage() {
         }
 
         try {
-          const response = await fetch(`http://localhost:8080/api/v1/referral-points`, {
+          const response = await fetch(API_REFERRAL_POINTS, {
             method: 'GET',
             headers: {
               Authorization: `Bearer ${getJwtToken()}`,
@@ -109,7 +111,7 @@ export default function SamplePurchasePage() {
 
 
     try {
-      const response = await fetch('http://localhost:8080/api/v1/transactions/preview', {
+      const response = await fetch(API_TRANSACTIONS + '/preview', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -187,6 +189,9 @@ export default function SamplePurchasePage() {
     {isAuthLoaded &&
       <div className="max-w-md mx-auto p-4">
         <h1 className="text-2xl font-bold mb-4">Purchase Tickets</h1>
+        <Link href="/sample-events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
+        Back to Dev-Events
+      </Link>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="userId" className="block font-medium">
@@ -238,6 +243,7 @@ export default function SamplePurchasePage() {
               className="border rounded px-2 py-1 w-full bg-gray-100"
             />
           </div>
+
           <div>
             <label htmlFor="ticketPrice" className="block font-medium">
               Ticket Price:
@@ -250,6 +256,7 @@ export default function SamplePurchasePage() {
               className="border rounded px-2 py-1 w-full bg-gray-100"
             />
           </div>
+          
           <div>
             <label htmlFor="totalPrice" className="block font-medium">
               Total Price:
@@ -262,6 +269,7 @@ export default function SamplePurchasePage() {
               className="border rounded px-2 py-1 w-full bg-gray-100"
             />
           </div>
+          { event && event.isPaidEvent &&
           <div>
             <label htmlFor="availableReferralPoints" className="block font-medium">
               Available Referral Points:
@@ -273,7 +281,8 @@ export default function SamplePurchasePage() {
               readOnly
               className="border rounded px-2 py-1 w-full bg-gray-100"
             />
-          </div>
+          </div> }
+          { event && event.isPaidEvent &&
           <div>
             <label htmlFor="referralPoints" className="block font-medium">
               Referral Points:
@@ -287,7 +296,7 @@ export default function SamplePurchasePage() {
               min="0"
               required
             />
-          </div>
+          </div> }
           <div className='text-[#FF0000]'>
             {errorText}
           </div>

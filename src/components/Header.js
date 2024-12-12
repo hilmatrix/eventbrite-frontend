@@ -1,4 +1,5 @@
 "use client";
+import { API_LOGIN } from "@/constants/api";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { memo, useState } from "react";
@@ -72,7 +73,7 @@ export default function Header() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/v1/login", {
+      const res = await fetch(API_LOGIN, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -102,7 +103,7 @@ export default function Header() {
               Events
             </Link>
             <Link href="/sample-events" className="mx-2 underline">
-              Sample Events
+              Dev-Events
             </Link>
             {loggedUser && loggedUser.eventOrganizer && <Link href="/account?tab=events" className="mx-2 underline">
               Organizer Menu
