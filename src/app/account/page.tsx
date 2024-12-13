@@ -12,15 +12,11 @@ import { Suspense } from "react";
 import { useAuth } from "../../contexts/AuthContext"; // Adjust this import to the correct location
 import useAuthRedirect from '../../hooks/useAuthRedirect';
 
-
-export default function AccountPage() {
+function AccountPageSub() {
   const { isLoggedIn, isAuthLoaded, loggedUser } = useAuth();
   const tab = useSearchParams().get("tab")
 
-  useAuthRedirect();
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
     <div className="bg-gray-200 min-h-screen">
       {!isAuthLoaded &&<div>Loading...</div>}
       
@@ -50,6 +46,15 @@ export default function AccountPage() {
         </div>
       }
     </div>
+  )
+}
+
+export default function AccountPage() {
+  useAuthRedirect();
+
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AccountPageSub></AccountPageSub>
     </Suspense>
   );
 }
