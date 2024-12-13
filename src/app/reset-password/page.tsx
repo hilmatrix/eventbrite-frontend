@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
     } catch (error) {
         // Log the error and show a meaningful message
         console.error("Error:", error);
-        alert("Password reset failed: " + error);
+        alert("Password reset failed: " + error.message);
     } finally {
         setLoading(false);
     }
