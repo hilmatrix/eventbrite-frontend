@@ -4,7 +4,7 @@ import { API_EVENTS } from '@/constants/api';
 import { useAuth } from '@/contexts/AuthContext';
 import axios from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 const formatDate = (dateString: string) => {
   const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -24,7 +24,7 @@ interface Event {
   createdAt: string;
 }
 
-const EventsPage = () => {
+function EventsPageSub() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [events, setEvents] = useState<Event[]>([]);
@@ -128,4 +128,10 @@ const EventsPage = () => {
   );
 };
 
-export default EventsPage;
+export default function EventsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <EventsPageSub></EventsPageSub>
+    </Suspense>
+  );
+}
