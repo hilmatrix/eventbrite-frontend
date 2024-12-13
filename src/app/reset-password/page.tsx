@@ -3,10 +3,10 @@
 import { API_RESET_PASSWORD } from "@/constants/api";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
-export default function ResetPasswordPage() {
+function ResetPasswordPageSub() {
   const {isLoggedIn} = useAuth();
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -108,3 +108,11 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
+
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordPageSub></ResetPasswordPageSub>
+    </Suspense>
+  );
+} 
