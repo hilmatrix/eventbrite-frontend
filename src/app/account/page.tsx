@@ -8,6 +8,7 @@ import AccountTickets from "@/components/AccountTickets";
 import AccountTransactions from "@/components/AccountTransactions";
 import ReusableLink from "@/components/ReusableLink";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { useAuth } from "../../contexts/AuthContext"; // Adjust this import to the correct location
 import useAuthRedirect from '../../hooks/useAuthRedirect';
 
@@ -19,6 +20,7 @@ export default function AccountPage() {
   useAuthRedirect();
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="bg-gray-200 min-h-screen">
       {!isAuthLoaded &&<div>Loading...</div>}
       
@@ -48,5 +50,6 @@ export default function AccountPage() {
         </div>
       }
     </div>
+    </Suspense>
   );
 }
