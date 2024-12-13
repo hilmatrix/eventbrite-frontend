@@ -3,7 +3,7 @@
 import { API_LOGIN } from "@/constants/api";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 export default function LoginPage() {
@@ -43,6 +43,7 @@ export default function LoginPage() {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm bg-white shadow-md rounded-lg p-6">
         <h1 className="text-2xl font-bold text-center mb-4">Login</h1>
@@ -99,5 +100,6 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
+    </Suspense>
   );
 }
