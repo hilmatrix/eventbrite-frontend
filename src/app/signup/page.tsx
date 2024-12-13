@@ -39,10 +39,10 @@ export default function SignupPage() {
         router.push("/login"); // Redirect to login on success
       } else {
         const errorData = await res.json();
-        alert("Signup failed: " + errorData);
+        alert("Signup failed: " + errorData.message);
       }
     } catch (error) {
-      alert("An unexpected error occurred: " + error);
+      alert("An unexpected error occurred: " + error.message);
     } finally {
       setLoading(false);
     }

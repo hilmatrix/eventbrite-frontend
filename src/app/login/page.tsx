@@ -36,7 +36,7 @@ export default function LoginPage() {
       login(data.token, email, data.user); // Update auth context with token and email
       router.push("/"); // Redirect to homepage on success
     } catch (error) {
-      alert("Login failed: " + error);
+      alert("Login failed: " + error.message);
     } finally {
       setLoading(false);
     }

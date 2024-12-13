@@ -44,7 +44,7 @@ export default function CekLogin() {
             setUserData(null);
           }
         } catch (error) {
-          setResponseText('Error: ' + error);
+          setResponseText('Error: ' + error.message);
           setUserData(null);
         }
       }
