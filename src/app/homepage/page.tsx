@@ -101,7 +101,7 @@ const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 text-center">
-        <p>&copy; 2024 Eventbrite Sample. All Rights Reserved.</p>
+        <p>&copy; 2024 Eventrix by Hilmand & Norman. All Rights Reserved.</p>
       </footer>
     </div>
   );
