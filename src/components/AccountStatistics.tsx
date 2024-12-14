@@ -55,7 +55,7 @@ export default function OrganizerStatistics() {
   const drawChart = (chartId, data, label, color) => {
     const svg = d3.select(chartId);
     svg.selectAll("*").remove(); // Clear previous chart
-    const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+    const margin = { top: 20, right: 30, bottom: 40, left: 100 }; // Doubled the left margin to make room for longer Y-axis labels
     const width = 500 - margin.left - margin.right;
     const height = 300 - margin.top - margin.bottom;
 
