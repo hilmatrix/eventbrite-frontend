@@ -32,9 +32,10 @@ export default function AccountTickets() {
 
       function Ticket({detail}) {
         const [event, setEvent] = useState(null);
+        
 
         useEffect(() => {
-          const fetchEvent = async () => {
+          const fetchData = async () => {
               try {
                 const token = getJwtToken();
                 const response = await fetch(API_EVENTS_BY_ID + "/" + detail.eventId, {
@@ -42,8 +43,6 @@ export default function AccountTickets() {
                     Authorization: `Bearer ${token}`,
                   },
                 });
-
-                console.log(response)
         
                 if (response.ok) {
                   const data = await response.json();
@@ -55,15 +54,15 @@ export default function AccountTickets() {
                 console.log("Error fetching events:", error);
               }
             }
-            fetchEvent();
+            fetchData();
         }, []);
         return (
             <>
                   {!event && <p><strong>eventId:</strong> {detail.eventId}</p>}
                   {event && <p><strong>Event Name:</strong> {event.name}</p>}
                   <p><strong>Ticket Code:</strong> {detail.code}</p>
-                  <p><strong>Used:</strong> {detail.used ? "Yes" : "No"}</p>
-                  <p><strong>Created At:</strong> {new Date(detail.createdAt).toLocaleString()}</p>
+                  <p><strong>Created At:</strong> {new Date(detail.createdAt).toLocaleString()
+                  }</p>
             </>
         )
       }

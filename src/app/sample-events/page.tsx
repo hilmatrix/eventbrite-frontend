@@ -11,7 +11,7 @@ const formatDate = (dateString: string) => {
 };
 
 interface Event {
-  eventId:number
+  eventId: number;
   name: string;
   price: number;
   date: string;
@@ -39,6 +39,12 @@ const EventsPage = () => {
     fetchEvents();
   }, []);
 
+  const isEventExpired = (eventDate: string) => {
+    const eventDateTime = new Date(eventDate).getTime();
+    const currentDateTime = new Date().getTime();
+    return eventDateTime < currentDateTime;
+  };
+
   return (
     <div className="flex flex-col items-center p-4">
       <h1 className="text-2xl font-bold mb-4">Upcoming Events</h1>
@@ -46,7 +52,7 @@ const EventsPage = () => {
         {events.map((event, index) => (
           <Link key={index} href={`/sample-events/${event.eventId}`}>
             <div
-              className="bg-white shadow-md rounded-lg mb-4 p-6 hover:shadow-lg transition-shadow"
+              className={`mb-4 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow ${isEventExpired(event.date) ? 'bg-gray-300' : 'bg-white'}`}
             >
               <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
               <p className="text-gray-600 mb-1">
