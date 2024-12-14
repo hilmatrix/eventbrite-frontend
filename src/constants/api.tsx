@@ -17,3 +17,6 @@ export const API_REVIEW_IS_ELIGIBLE = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/a
 export const API_REVIEWS_CREATE = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/reviews-ratings/create`;
 export const API_REVIEW_LIST = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/reviews-ratings/list-by-user-id`;
 export const API_REVIEWS_BY_EVENT_ID = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/reviews-ratings/list-by-event-id`;
+export const API_ORGANIZER_TICKETS_SOLD =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/tickets-sold`;
+export const API_ORGANIZER_REVENUE =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/revenue`;
+export const API_ORGANIZER_STATISTICS =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/statistics`;

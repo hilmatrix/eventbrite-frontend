@@ -5,6 +5,7 @@ import AccountPoints from "@/components/AccountPoints";
 import AccountProfile from "@/components/AccountProfile";
 import AccountPromotions from "@/components/AccountPromotions";
 import AccountReviews from "@/components/AccountReviews";
+import AccountStatistics from "@/components/AccountStatistics";
 import AccountTickets from "@/components/AccountTickets";
 import AccountTransactions from "@/components/AccountTransactions";
 import ReusableLink from "@/components/ReusableLink";
@@ -43,7 +44,7 @@ function AccountPageSub() {
 
         { (loggedUser.eventOrganizer && (tab == "events")) && <AccountEvents></AccountEvents>}        
         { (loggedUser.eventOrganizer && (tab == "promotions")) && <AccountPromotions></AccountPromotions>}  
-        { (loggedUser.eventOrganizer && (tab == "statistics")) && <AccountTransactions></AccountTransactions>}         
+        { (loggedUser.eventOrganizer && (tab == "statistics")) && <AccountStatistics></AccountStatistics>}         
         </div>
       }
     </div>

@@ -17,7 +17,7 @@ const LoggedIn = memo(({ loggedEmail, logout, toggleDropdown, dropdownOpen }) =>
       <div className="absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded shadow-lg z-10">
         <ul>
           <li>
-            <Link href="/profile" className="block px-4 py-2 hover:bg-gray-100">
+            <Link href="/account" className="block px-4 py-2 hover:bg-gray-100">
               Profile
             </Link>
           </li>
