@@ -4,6 +4,7 @@ import AccountEvents from "@/components/AccountEvents";
 import AccountPoints from "@/components/AccountPoints";
 import AccountProfile from "@/components/AccountProfile";
 import AccountPromotions from "@/components/AccountPromotions";
+import AccountReviews from "@/components/AccountReviews";
 import AccountTickets from "@/components/AccountTickets";
 import AccountTransactions from "@/components/AccountTransactions";
 import ReusableLink from "@/components/ReusableLink";
@@ -27,6 +28,7 @@ function AccountPageSub() {
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=points"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Points</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=tickets"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Tickets</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=transactions"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Transactions</ReusableLink>}
+              {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=reviews"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Reviews</ReusableLink>}
               {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=events"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Events</ReusableLink>}
               {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=promotions"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Promotions</ReusableLink>}
               {loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=statistics"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Statistics</ReusableLink>}
@@ -35,10 +37,9 @@ function AccountPageSub() {
           {!tab && <AccountProfile></AccountProfile>}
           
         { (!loggedUser.eventOrganizer && (tab == "points")) && <AccountPoints></AccountPoints>}
-
         { (!loggedUser.eventOrganizer && (tab == "tickets")) && <AccountTickets></AccountTickets>}
-
         { (!loggedUser.eventOrganizer && (tab == "transactions")) && <AccountTransactions></AccountTransactions>}
+        { (!loggedUser.eventOrganizer && (tab == "reviews")) && <AccountReviews></AccountReviews>}    
 
         { (loggedUser.eventOrganizer && (tab == "events")) && <AccountEvents></AccountEvents>}        
         { (loggedUser.eventOrganizer && (tab == "promotions")) && <AccountPromotions></AccountPromotions>}  

@@ -73,10 +73,11 @@ export default function AccountTransactions() {
                 console.log("Error fetching review eligibility:", error);
               }
             }
-
-            
             fetchEvent();
         }, []);
+
+
+        
         return (
             <>
                   {!event && <p><strong>eventId:</strong> {detail.eventId}</p>}
