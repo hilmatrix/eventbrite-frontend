@@ -1,5 +1,6 @@
-import { API_EVENTS_BY_ID, API_TRANSACTIONS } from "@/constants/api";
+import { API_EVENTS_BY_ID, API_REVIEW_IS_ELIGIBLE, API_TRANSACTIONS } from "@/constants/api";
 import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 export default function AccountTransactions() {
     const { getJwtToken } = useAuth();
@@ -32,6 +33,7 @@ export default function AccountTransactions() {
 
       function Transaction({detail}) {
         const [event, setEvent] = useState(null);
+        const [reviewStatus, setReviewStatus] = useState(null)
 
         useEffect(() => {
           const fetchEvent = async () => {
@@ -42,8 +44,6 @@ export default function AccountTransactions() {
                     Authorization: `Bearer ${token}`,
                   },
                 });
-
-                console.log(response)
         
                 if (response.ok) {
                   const data = await response.json();
@@ -54,7 +54,27 @@ export default function AccountTransactions() {
               } catch (error) {
                 console.log("Error fetching events:", error);
               }
+
+              try {
+                const token = getJwtToken();
+                const response = await fetch(API_REVIEW_IS_ELIGIBLE + "/" + detail.eventId, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                });
+
+                if (response.ok) {
+                  const data = await response.json();
+                  setReviewStatus(data);
+                } else {
+                  console.log("Failed fetch review eligibility");
+                }
+              } catch (error) {
+                console.log("Error fetching review eligibility:", error);
+              }
             }
+
+            
             fetchEvent();
         }, []);
         return (
@@ -64,6 +84,14 @@ export default function AccountTransactions() {
                   <p><strong>Ticket Amount:</strong> {detail.ticketAmount}</p>
                   <p><strong>Total Price:</strong> Rp. {detail.totalPrice}</p>
                   <p><strong>Created At:</strong> {new Date(detail.createdAt).toLocaleString()}</p>
+                  {reviewStatus && reviewStatus.isEligible &&
+                  <Link href={`/create-review/${detail.eventId}`}>
+                    <button className="rounded-[10px] bg-[#00AA00] h-8 p-2 flex items-center justify-center ">Give Review</button>
+                  </Link> }
+                  {reviewStatus && !reviewStatus.isEligible &&
+                  <div >
+                    <button className="rounded-[10px] bg-[#AAAAAA] h-8 p-2 flex items-center justify-center ">{reviewStatus.reason}</button>
+                  </div> }
             </>
         )
       }

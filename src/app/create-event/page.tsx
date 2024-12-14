@@ -10,7 +10,6 @@ import useAuthRedirect from '../../hooks/useAuthRedirect';
 export default function createEvent() {
   const { isLoggedIn, getJwtToken } = useAuth();
   const [responseText, setResponseText] = useState('');
-  const [userData, setUserData] = useState(null);
   const [eventForm, setEventForm] = useState({
     userId: 1, // replace with actual id based on the logged in account
     name: '',

@@ -12,3 +12,6 @@ export const API_TEST_TOKEN = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/testtoken
 export const API_ORGANIZER_EVENTS = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/events`;
 export const API_ORGANIZER_PROMOTIONS = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/promotions`;
 export const API_AVAILABLE_SEATS= `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/available-seats`;
+export const API_EVENTS_IS_EXPIRED = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/events/is-expired`;
+export const API_REVIEW_IS_ELIGIBLE = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/reviews-ratings/isEligible`;
+export const API_REVIEWS_CREATE = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/reviews-ratings/create`;

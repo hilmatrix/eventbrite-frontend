@@ -1,5 +1,5 @@
 "use client"
-import { API_EVENTS_BY_ID } from '@/constants/api';
+import { API_EVENTS_BY_ID, API_EVENTS_IS_EXPIRED } from '@/constants/api';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -25,6 +25,7 @@ interface Event {
 
 const EventsPage = () => {
   const [event, setEvent] = useState<Event[]>([]);
+  const [isExpired, setIsExpired] = useState(false);
   const id = useParams().id
 
   useEffect(() => {
@@ -32,6 +33,13 @@ const EventsPage = () => {
       try {
         const response = await axios.get(API_EVENTS_BY_ID + "/" + id);
         setEvent(response.data);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+
+      try {
+        const response = await axios.get(API_EVENTS_IS_EXPIRED + "/" + id);
+        setIsExpired(response.data.isExpired);
       } catch (error) {
         console.error('Error fetching events:', error);
       }
@@ -71,11 +79,17 @@ const EventsPage = () => {
               <strong>Registration opened at:</strong> {formatDate(event.createdAt)}
             </p>
             <p className="text-gray-700 mt-2">{event.description}</p>
+            { !isExpired &&
             <Link href={`/sample-purchase/${id}`} >
               <div className='rounded-[20px] flex items-center justify-center w-[160px] h-[40px] bg-[#00AA00]'>
                 Purchase Ticket
               </div>
-            </Link>
+            </Link> }
+            { isExpired &&
+            <div className='rounded-[20px] flex items-center justify-center w-[160px] h-[40px] bg-[#AAAAAA]'>
+              Event is Expired
+            </div>
+            }
           </div>
       </div>
     </div>
