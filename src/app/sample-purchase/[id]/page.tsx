@@ -187,7 +187,7 @@ export default function SamplePurchasePage() {
       {isAuthLoaded &&
         <div className="max-w-md mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Purchase Tickets</h1>
-          <Link href="/sample-events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
+          <Link href="/events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
             Back to Dev-Events
           </Link>
           <form onSubmit={handleSubmit} className="space-y-4">

@@ -74,6 +74,12 @@ function EventsPageSub() {
     router.push(`?${params.toString()}`, { shallow: true }); // Use shallow routing to avoid page reload
   }, [filters, router]);
 
+  const isEventExpired = (eventDate: string) => {
+    const eventDateTime = new Date(eventDate).getTime();
+    const currentDateTime = new Date().getTime();
+    return eventDateTime < currentDateTime;
+  };
+
   return (
     <div className="flex flex-col items-center p-4">
       <div className="filters">
@@ -105,8 +111,8 @@ function EventsPageSub() {
         {events.map((event, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-lg mb-4 p-6 hover:shadow-lg transition-shadow cursor-pointer"
-            onClick={() => router.push(`/events/${event.eventId}`)} // Navigate to the event detail page
+            className={`${isEventExpired(event.date) ? 'bg-gray-300' : 'bg-white'} shadow-md rounded-lg mb-4 p-6 hover:shadow-lg transition-shadow cursor-pointer`}
+            onClick={() => router.push(`/sample-events/${event.eventId}`)} // Navigate to the event detail page
           >
             <h2 className="text-xl font-semibold mb-2">{event.name}</h2>
             <p className="text-gray-600 mb-1">
