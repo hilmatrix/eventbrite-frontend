@@ -80,7 +80,7 @@ const EventsPage = () => {
   return (
     <div className="flex flex-col items-center p-4">
       <h1 className="text-2xl font-bold mb-4">Event Details</h1>
-      <Link href="/sample-events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
+      <Link href="/events" className="rounded-[20px] h-10 w-60 bg-[#AAAAAA] flex items-center justify-center">
         Back to Dev-Events
       </Link>
       <div className="w-full max-w-4xl">

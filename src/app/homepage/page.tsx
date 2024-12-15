@@ -81,7 +81,7 @@ const App: React.FC = () => {
         <h3 className="text-3xl font-semibold mb-6">Featured Events</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {events.map((event) => (
-            <Link href={`/events/${event.eventId}`} key={event.eventId}>
+            <Link href={`/sample-events/${event.eventId}`} key={event.eventId}>
               <div className="bg-white rounded-lg shadow-md overflow-hidden">
                 <img
                   src={`https://via.placeholder.com/300x200?text=` + event.name.replace(" ", "+")}

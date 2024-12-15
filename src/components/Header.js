@@ -102,9 +102,9 @@ export default function Header() {
             <Link href="/events" className="mx-2 underline">
               Events
             </Link>
-            <Link href="/sample-events" className="mx-2 underline">
+            {false && <Link href="/sample-events" className="mx-2 underline">
               Dev-Events
-            </Link>
+            </Link>}
             {loggedUser && loggedUser.eventOrganizer && <Link href="/account?tab=events" className="mx-2 underline">
               Organizer Menu
             </Link>}
