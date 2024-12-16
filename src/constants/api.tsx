@@ -20,3 +20,4 @@ export const API_REVIEWS_BY_EVENT_ID = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/
 export const API_ORGANIZER_TICKETS_SOLD =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/tickets-sold`;
 export const API_ORGANIZER_REVENUE =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/revenue`;
 export const API_ORGANIZER_STATISTICS =`${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/organizer/statistics`;
+export const API_REFERRAL_DISCOUNTS = `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/v1/referral-discounts`;
