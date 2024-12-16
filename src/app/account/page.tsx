@@ -4,6 +4,7 @@ import AccountEvents from "@/components/AccountEvents";
 import AccountPoints from "@/components/AccountPoints";
 import AccountProfile from "@/components/AccountProfile";
 import AccountPromotions from "@/components/AccountPromotions";
+import AccountReferralDiscounts from "@/components/AccountReferralDiscounts";
 import AccountReviews from "@/components/AccountReviews";
 import AccountStatistics from "@/components/AccountStatistics";
 import AccountTickets from "@/components/AccountTickets";
@@ -27,6 +28,7 @@ function AccountPageSub() {
           <div className="bg-white shadow-md rounded-lg p-6 my-4 h-[50%] w-[90%] md:w-[80%] flex justify-evenly">
               <ReusableLink href="/account" color="#000000" colorHover="#888888" textColor="#FFFFFF">Profile</ReusableLink>
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=points"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Points</ReusableLink>}
+              {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=discounts"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Discounts</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=tickets"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Tickets</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=transactions"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Transactions</ReusableLink>}
               {!loggedUser.eventOrganizer &&<ReusableLink href="/account?tab=reviews"  color="#000000" colorHover="#888888" textColor="#FFFFFF">Reviews</ReusableLink>}
@@ -38,6 +40,7 @@ function AccountPageSub() {
           {!tab && <AccountProfile></AccountProfile>}
           
         { (!loggedUser.eventOrganizer && (tab == "points")) && <AccountPoints></AccountPoints>}
+        { (!loggedUser.eventOrganizer && (tab == "discounts")) && <AccountReferralDiscounts></AccountReferralDiscounts>}
         { (!loggedUser.eventOrganizer && (tab == "tickets")) && <AccountTickets></AccountTickets>}
         { (!loggedUser.eventOrganizer && (tab == "transactions")) && <AccountTransactions></AccountTransactions>}
         { (!loggedUser.eventOrganizer && (tab == "reviews")) && <AccountReviews></AccountReviews>}    
